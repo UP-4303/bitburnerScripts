@@ -97,6 +97,9 @@ export async function financialAnalysis(ns, moneyThreshold, targets) {
 		verboseInfo.availableMoney = availableMoney;
 		verboseInfo.maxMoney = maxMoney;
 
+		let priority = availableMoney < maxMoney * 0.9; // If available money is less than 90% of max money, this server should be a prioritised target to get a maximized output in the next financial analysis
+		verboseInfo.priority = priority;
+
 		if(availableMoney < 1){
 			availableMoney = 1;
 		}
@@ -146,12 +149,13 @@ export async function financialAnalysis(ns, moneyThreshold, targets) {
 				"time": time,
 				"weakenCount": weakenCount,
 				"growCount": growCount,
-				"hackCount": hackCount
+				"hackCount": hackCount,
+				"priority": priority
 			});
 		}
 		verboseInfos.push(verboseInfo);
 	}
-	timeToMoney.sort((a, b) => a.time - b.time);
+	timeToMoney.sort((a,b) => a.priority == b.priority ? a.time - b.time : b.priority - a.priority);
 	return [timeToMoney, verboseInfos];
 }
 
