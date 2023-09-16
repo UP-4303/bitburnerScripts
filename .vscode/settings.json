@@ -8,5 +8,10 @@
     "files.exclude": {
         "jsconfig.json": true,
         "NetscriptDefinitions.d.ts": true,
-    }
+    },
+
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.singleQuote": true,
+    "prettier.useTabs": true,
+    "prettier.tabWidth": 4
 }
