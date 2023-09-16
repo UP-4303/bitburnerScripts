@@ -34,7 +34,7 @@ export function scan(ns) {
 
 /** @param {NS} ns */
 export function openPortLevel(ns, verbose = false) {
-	let scripts = ["FTPCrack.exe", "HTTPWorm.exe", "relaySMTP.exe", "SQLInject.exe", ""];
+	let scripts = ["FTPCrack.exe", "HTTPWorm.exe", "relaySMTP.exe", "SQLInject.exe", "BruteSSH.exe"];
 	let verboseResult = [];
 	let scriptLevel = 0;
 	for (let script of scripts) {
