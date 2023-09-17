@@ -15,9 +15,9 @@ export async function watcher(ns, targets, runOnTrigger) {
 		return
 	}
 
-	// Remove personal servers
+	// Remove personal servers and unhackable
 	for(let targetIndex in targets){
-		if(targets[targetIndex].name == 'home' || targets[targetIndex].name.match(/server-[0-9]*/)){
+		if(targets[targetIndex].name in ['home','darkweb'] || targets[targetIndex].name.match(/server-[0-9]*/)){
 			markedForRemoval.push(targetIndex);
 		}
 	}

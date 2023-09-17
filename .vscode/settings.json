@@ -1,5 +1,5 @@
 {
-    "bitburner.scriptRoot": ".",
+    "bitburner.scriptRoot": "./src",
     "bitburner.fileWatcher.enable": true,
     "bitburner.showPushSuccessNotification": true,
     "bitburner.showFileWatcherEnabledNotification": true,
