@@ -93,7 +93,7 @@ export async function main(ns) {
 			ns.tprint(verboseInfos);
 		}
 		ns.disableLog('print');
-
+		
 		await ns.sleep(10000);
 	}
 }
@@ -220,7 +220,7 @@ export async function taskDispatcher(
 			ramAvailable[0].ram >= weakenRam
 		) {
 			let threads = Math.floor(ramAvailable[0].ram / weakenRam);
-			ramAvailable[0].ram -= weakenRam * threads;
+			ramAvailable[0].ram -= Math.min(weakenRam * threads, weakenCount);
 			weakenCount -= threads;
 			ns.exec(
 				'/scripts/weaken.js',
@@ -229,7 +229,10 @@ export async function taskDispatcher(
 				bestTarget.name
 			);
 		} else if (growCount >= hackCount && ramAvailable[0].ram >= growRam) {
-			let threads = Math.floor(ramAvailable[0].ram / growRam);
+			let threads = Math.min(
+				Math.floor(ramAvailable[0].ram / growRam),
+				growCount
+			);
 			ramAvailable[0].ram -= growRam * threads;
 			growCount -= threads;
 			ns.exec(
@@ -240,7 +243,7 @@ export async function taskDispatcher(
 			);
 		} else if (ramAvailable[0].ram >= hackRam) {
 			let threads = Math.floor(ramAvailable[0].ram / hackRam);
-			ramAvailable[0].ram -= hackRam * threads;
+			ramAvailable[0].ram -= Math.min(hackRam * threads, hackCount);
 			hackCount -= threads;
 			ns.exec(
 				'/scripts/hack.js',
