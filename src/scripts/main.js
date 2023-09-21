@@ -15,7 +15,7 @@ export async function main(ns) {
 	switch (indexChoice) {
 		case 0:
 			ns.run('/scripts/watcher.js');
-			ns.run('/scripts/rem.js')
+			ns.run('/scripts/rem-v2.js')
 			break;
 		case 1:
 			ns.run('/scripts/buyServersAndDeploy.js')
