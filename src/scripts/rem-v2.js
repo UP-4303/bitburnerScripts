@@ -272,9 +272,9 @@ export async function taskDispatcher(
 		}
 
 		if (
-			(ramAvailable[0].ram < weakenRam && weakenCount <= 0) ||
-			(ramAvailable[0].ram < growRam && growCount <= 0 ||
-			(ramAvailable[0].ram < hackRam && hackCount <= 0
+			(ramAvailable[0].ram < weakenRam || weakenCount <= 0) &&
+			(ramAvailable[0].ram < growRam || growCount <= 0) &&
+			(ramAvailable[0].ram < hackRam || hackCount <= 0)
 		) {
 			ramAvailable.shift();
 		}
