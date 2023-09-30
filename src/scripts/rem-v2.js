@@ -13,7 +13,7 @@ export async function main(ns) {
 	let hackRam = ns.getScriptRam('/scripts/hack.js');
 	let weakenRam = ns.getScriptRam('/scripts/weaken.js');
 	let growRam = ns.getScriptRam('/scripts/grow.js');
-	let moneyThreshold = 1000000;
+	let moneyThreshold = 1000000000;
 
 	while (true) {
 		// Get newly hacked servers
@@ -117,6 +117,7 @@ export async function financialAnalysis(ns, moneyThreshold, targets, pids) {
 		) {
 			target.growCount = 1;
 		}
+
 		target.hackCount = Math.ceil(
 			moneyThreshold /
 				(target.availableMoney * target.growCount * target.growParam +
@@ -131,6 +132,7 @@ export async function financialAnalysis(ns, moneyThreshold, targets, pids) {
 		) {
 			target.hackCount = 1;
 		}
+		
 		target.weakenCount = Math.ceil(
 			(target.security_ -
 				target.minSecurity +
@@ -194,7 +196,7 @@ export async function taskDispatcher(
 	let flagError = false;
 
 	if (length <= 0 || targets[0].targetable == false) {
-		return [];
+		return;
 	}
 
 	let weakenCount = 0;
@@ -222,9 +224,7 @@ export async function taskDispatcher(
 					targets[index].name
 				)
 			);
-		}
-
-		if (growCount > 0 && ramAvailable[0].ram >= growRam) {
+		} else if (growCount > 0 && ramAvailable[0].ram >= growRam) {
 			let threads = Math.min(
 				Math.floor(ramAvailable[0].ram / growRam),
 				growCount
@@ -239,9 +239,7 @@ export async function taskDispatcher(
 					targets[index].name
 				)
 			);
-		}
-
-		if (hackCount > 0 && ramAvailable[0].ram >= hackRam) {
+		} else if (hackCount > 0 && ramAvailable[0].ram >= hackRam) {
 			let threads = Math.min(
 				Math.floor(ramAvailable[0].ram / hackRam),
 				hackCount
@@ -256,6 +254,8 @@ export async function taskDispatcher(
 					targets[index].name
 				)
 			);
+		} else {
+			ramAvailable.shift();
 		}
 
 		if (weakenCount <= 0 && growCount <= 0 && hackCount <= 0) {
@@ -270,13 +270,7 @@ export async function taskDispatcher(
 			growCount = targets[index].growCount;
 			hackCount = targets[index].hackCount;
 		}
-
-		if (
-			(ramAvailable[0].ram < weakenRam || weakenCount <= 0) &&
-			(ramAvailable[0].ram < growRam || growCount <= 0) &&
-			(ramAvailable[0].ram < hackRam || hackCount <= 0)
-		) {
-			ramAvailable.shift();
-		}
 	}
+
+	return;
 }
