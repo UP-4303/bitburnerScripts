@@ -30,10 +30,7 @@ export async function watcher(ns, targets, runOnTrigger) {
 		markedForRemoval.shift();
 	}
 
-
-
-	// Try until everything is hacked
-	while (targets.length > 0) {
+	while (true) {
 		scriptLevel = openPortLevel(ns);
 
 		// Main iteration
